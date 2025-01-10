@@ -11,4 +11,5 @@ Route::group (['prefix'=>'blog'], function(){
     Route::get ('/master', [BlogController::class, 'master'])->name('master');
     Route::get('/list',[BlogController::class, 'list'])->name('list');
     Route::post('/form', [BlogController::class, 'form'])->name('form');
+    Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('delete');
 });

@@ -52,7 +52,9 @@
                             <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <a href="{{ route('delete', $item->id) }}">
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </a>
                         </div>
                     </div>
                 </div>

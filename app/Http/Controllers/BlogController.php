@@ -12,11 +12,27 @@ class BlogController extends Controller
     }
 
     public function list (){
-        $blogs = Blog::select('name', 'description', 'image', 'owner_name')
+        $blogs = Blog::select('id','name', 'description', 'image', 'owner_name')
                 ->orderBy('created_at', 'desc')
                 ->paginate(2);
 
         return view('main/list',compact('blogs'));
+    }
+
+    public function delete($id){
+        // dd($id);
+        $imageName = Blog::where('id', $id)->value('image'); //find is bug && Query builder
+
+        // dd($imageName);
+        unlink(public_path('image/'.$imageName)); //delete locally
+
+        $deleteData = Blog::where ('id', $id)->delete(); //delete on database
+
+        //sweet alert message
+        alert()->success('Success','Delete successful');
+
+        return back();
+
     }
 
     public function form(Request $request){
