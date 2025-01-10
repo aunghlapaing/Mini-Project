@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -11,7 +12,11 @@ class BlogController extends Controller
     }
 
     public function list (){
-        return view('main/list');
+        $blogs = Blog::select('name', 'description', 'image', 'owner_name')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        return view('main/list',compact('blogs'));
     }
 
     public function form(Request $request){
@@ -20,14 +25,6 @@ class BlogController extends Controller
         // $this->validation($request); //use the valitation function
 
         // return 'success';
-        return $request;
-
-         $fromData = [
-            'name'=>$request->name,
-            'descrption'=>$request->description,
-            'image'=>$request->file('image'),
-            'owner_name'=>$request->ownerName,
-        ];
 
         $name = $request->name;
         $description = $request->description;
@@ -39,21 +36,26 @@ class BlogController extends Controller
         if (($name && $description && $image) == null){
             $this->validation($request);
         }else{
-            if($request->hasFile('image')){
+
             $imageName = uniqid() . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path().'/image/',$imageName);
-            
+                        
             $data = [
                 'name'=>$request->name,
-                'descrption'=>$request->description,
+                'description'=>$request->description,
                 'image'=>$imageName,
                 'owner_name'=>$request->ownerName,
             ];
-
-            dd($data);
-        }else{
-             return ("Image file doesn't have");
-        }
+            
+            // dd($data);
+            
+             //insert into table using query builder
+            Blog::create($data);
+            
+            //message for list.blade.php
+            return back()->with([
+                'success'=>'Insert data successfully'
+            ]);
         }
     }
 
@@ -62,7 +64,7 @@ class BlogController extends Controller
         $rules = [
             'name' => 'required',
             'description' => 'required|',
-            'image' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
+            'image' => 'required|mimes:jpeg,jpg,png,gif'
 
         ];
         $message = [
