@@ -27,7 +27,7 @@
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <input type="file" name="image" class="form-control mt-2 @error ('image') is-inivalid @enderror" value=" {{ old('image') }} ">
+                        <input type="file" name="image" class="form-control mt-2 @error ('image') is-invalid @enderror">
                         @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
