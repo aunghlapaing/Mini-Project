@@ -14,7 +14,7 @@ class BlogController extends Controller
     public function list (){
         $blogs = Blog::select('name', 'description', 'image', 'owner_name')
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->paginate(2);
 
         return view('main/list',compact('blogs'));
     }
@@ -51,11 +51,16 @@ class BlogController extends Controller
             
              //insert into table using query builder
             Blog::create($data);
+
+            //sweet alert message
+            alert()->success('Success','Blog Create Successful');
+
+            return back();
             
             //message for list.blade.php
-            return back()->with([
-                'success'=>'Insert data successfully'
-            ]);
+            // return back()->with([
+            //     'success'=>'Insert data successfully'
+            // ]);
         }
     }
 

@@ -18,6 +18,10 @@
     </div>
     @yield('content')
     
+    {{-- sweet alert laravel --}}
+    @include('sweetalert::alert')
+
+    
     
 </body>
 {{-- cdn js link --}}

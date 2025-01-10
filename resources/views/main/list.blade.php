@@ -10,12 +10,12 @@
                 <div class="card-body">
 
                     {{-- message from controller using session --}}
-                    @if(Session::has('success'))
+                    {{-- @if(Session::has('success'))
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <strong>{{ Session::get('success') }}</strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    @endif
+                    @endif --}}
 
                     <form action="{{ route('form') }}" method="post" enctype="multipart/form-data">
                         @csrf 
@@ -23,7 +23,7 @@
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <textarea name="description" id="" class="form-control mt-2 @error ('description') is-invalid @enderror" cols="30" rows="8" placeholder="説明を入力してください...">value="{{ old('description') }}"</textarea>
+                        <textarea name="description" id="" class="form-control mt-2 @error ('description') is-invalid @enderror" cols="30" rows="8" placeholder="説明を入力してください...">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -57,6 +57,8 @@
                     </div>
                 </div>
             @endforeach
+
+            <span>{{ $blogs->links() }}</span>
         </div>
     </div>
 
