@@ -10,4 +10,5 @@ Route::get('/', function () {
 Route::group (['prefix'=>'blog'], function(){
     Route::get ('/master', [BlogController::class, 'master'])->name('master');
     Route::get('/list',[BlogController::class, 'list'])->name('list');
+    Route::post('/form', [BlogController::class, 'form'])->name('form');
 });

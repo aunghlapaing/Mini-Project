@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->longText('title');
+            $table->longText('description');
             $table->text('image');
             $table->char('owner_name', 50)->nullable()->default('anynomous');
             $table->timestamps();

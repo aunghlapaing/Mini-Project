@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     protected $table = ('Blogs');
-    protected $fillabe= ['name', 'title', 'image', 'owner_own'];
+    protected $fillabe= ['name', 'description', 'image', 'owner_own'];
 }

@@ -8,12 +8,21 @@
         <div class="col-5">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
-                        <input type="text" name="name" class="form-control mt-2" placeholder="Enter Blog name..." value="">
-                        <input type="text" name="title"class="form-control mt-2" placeholder="Enter Title name..." value="">
-                        <textarea name="description" id="" class="form-control mt-2" cols="30" rows="8" placeholder="Enter Description..."></textarea>
-                        <input type="file" name="image" class="form-control mt-2" value="">
-                        <input type="text" name="owner-name" class="form-control mt-2" placeholder="Enter owner name..." value="">
+                    <form action="{{ route('form') }}" method="post" enctype="multipart/form-data">
+                        @csrf 
+                        <input type="text" name="name" class="form-control mt-2 @error ('name') is-invalid @enderror" placeholder="ブログ名を入力してください..." value="{{ old('name') }}">
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <textarea name="description" id="" class="form-control mt-2 @error ('description') is-invalid @enderror" cols="30" rows="8" placeholder="説明を入力してください..." value="{{ old('description') }}"></textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <input type="file" name="image" class="form-control mt-2 @error ('image') is-inivalid @enderror" value=" {{ old('image') }} ">
+                        @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <input type="text" name="ownerName" class="form-control mt-2" placeholder="所有者名を入力してください..." value="">
                         <input type="submit" name="btn-submit" class="btn btn-primary text-white shadow-sm mt-2 w-100">
                     </form>
                 </div>
@@ -26,10 +35,10 @@
                         Testing
                     </div>
                     <div class="col-1">
-                        <button><i class="fa-solid text-primary fa-pen-to-square"></i></button>
+                        <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
                     </div>
                     <div class="col-1">
-                        <button><i class="fa-solid text-danger fa-trash"></i></button>
+                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             </div>
