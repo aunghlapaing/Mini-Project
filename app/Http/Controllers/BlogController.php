@@ -29,7 +29,7 @@ class BlogController extends Controller
         $deleteData = Blog::where ('id', $id)->delete(); //delete on database
 
         //sweet alert message
-        alert()->success('Success','Delete successful');
+        // alert()->success('Success','Delete successful');
 
         return back();
 
@@ -73,7 +73,7 @@ class BlogController extends Controller
 
             return back();
             
-            //message for list.blade.php
+            //message for list.blade.php manaully
             // return back()->with([
             //     'success'=>'Insert data successfully'
             // ]);
