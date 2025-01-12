@@ -42,29 +42,44 @@
                 </div>
             </div>
             <div class="col-7">
-                @foreach ($blogs as $item)
-
-                    <div class="card mb-2">
-                        <div class="card-body d-flex">
-                            <div class="col-2">
-                                <img src="{{ asset('image/' . $item->image) }}" class="w-100" alt="">
-                            </div>
-                            <div class="col-8">
-                                <div class="ms-2 text-blod">{{ $item->name }}</div>
-                                <div class="ms-2 text-muted">{{ $item->description }}</div>
-                            </div>
-                            <div class="col-1">
-                                <a href="{{ url('blog/update/'. $item->id) }}">
-                                    <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
-                                </a>
-                            </div>
-                            <div class="col-1">
-                                <button type="button" onclick="confirmDelete({{ $item->id }})"
-                                    class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                            </div>
+                <form action="{{ route('list') }}" method="get">
+                    @csrf
+                    <div class="col-6 offset-6 mb-2">
+                        <div class="input-group">
+                            <input type="text" name="searchKey" class="form-control" value="{{ request('searchKey') }}" placeholder="Enter Search Key..." aria-label="Input group example" aria-describedby="btnGroupAddon2">
+                            <button type="submit" class="btn btn-primary input-group-text"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
-                @endforeach
+                </form>
+
+
+                @if(count($blogs) != 0)
+                    @foreach ($blogs as $item)
+
+                        <div class="card mb-2">
+                            <div class="card-body d-flex">
+                                <div class="col-2">
+                                    <img src="{{ asset('image/' . $item->image) }}" class="w-100" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <div class="ms-2 text-blod">{{ $item->name }}</div>
+                                    <div class="ms-2 text-muted">{{ $item->description }}</div>
+                                </div>
+                                <div class="col-1">
+                                    <a href="{{ url('blog/update/'. $item->id) }}">
+                                        <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
+                                    </a>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" onclick="confirmDelete({{ $item->id }})"
+                                        class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <h3 class="text-center my-3 text-muted">No record found!</h3>
+                @endif
 
                 <span>{{ $blogs->links() }}</span>
             </div>
