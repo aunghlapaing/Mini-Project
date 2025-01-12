@@ -17,7 +17,7 @@
                         </div>
                     @endif --}}
 
-                        <form action="{{ route('form') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('formCreate') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="text" name="name" class="form-control mt-2 @error('name') is-invalid @enderror"
                                 placeholder="ブログ名を入力してください..." value="{{ old('name') }}">
@@ -41,8 +41,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-7">
                 @foreach ($blogs as $item)
+
                     <div class="card mb-2">
                         <div class="card-body d-flex">
                             <div class="col-2">
@@ -53,7 +54,9 @@
                                 <div class="ms-2 text-muted">{{ $item->description }}</div>
                             </div>
                             <div class="col-1">
-                                <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
+                                <a href="{{ url('blog/update/'. $item->id) }}">
+                                    <button class="btn btn-primary"><i class="fa-solid  fa-pen-to-square"></i></button>
+                                </a>
                             </div>
                             <div class="col-1">
                                 <button type="button" onclick="confirmDelete({{ $item->id }})"
@@ -90,7 +93,7 @@
                         icon: "success"
                     });
                     setInterval(() => {
-                        location.href = "/blog/delete/" + $id 
+                        location.href = "/blog/delete/" + $id
                     }, 1000);
                 }
             });

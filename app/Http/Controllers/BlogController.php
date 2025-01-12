@@ -21,21 +21,71 @@ class BlogController extends Controller
 
     public function delete($id){
         // dd($id);
-        $imageName = Blog::where('id', $id)->value('image'); //find is bug && Query builder
+        $imageName = Blog::where('id', $id)->value('image'); //find() is bug && Query builder
 
         // dd($imageName);
         unlink(public_path('image/'.$imageName)); //delete locally
 
         $deleteData = Blog::where ('id', $id)->delete(); //delete on database
 
-        //sweet alert message
-        // alert()->success('Success','Delete successful');
-
         return back();
+    }
+
+    // retrun data from list using parameter passing
+    public function update($id){
+        $blog = Blog::where ('id',$id)->first();
+
+        // dd($blog);
+        return view('main/update', compact('blog'));
+    }
+
+    // update data from form into table using query builder
+    public function formUpdate(Request $request, $id){
+        // return 'formUpdate';
+        // dd ($request->all(), $id);
+        $request['id'] = $id;
+
+        $this->validation($request, 'update');
+
+        $data = $this->getFromData($request);
+
+        if($request->hasFile('image')){
+            $oldImage = $request->oldImage; //old image from hidded input
+
+            // dd($oldImage);
+
+            if(file_exists(public_path('image/'. $oldImage))){
+                unlink(public_path('image/'. $oldImage));
+            }
+
+            $file_name = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path().'/image/',$file_name);
+
+            $data['image'] = $file_name;
+
+        }
+
+        $updateData = Blog::where('id', $id)->update($data);
+
+        
+        //sweet alert message
+        alert()->success('Success','Blog Update Successful');
+
+        return to_route('list');
+        
+        
 
     }
 
-    public function form(Request $request){
+    private function getFromData ($data){
+        return [
+            'name' => $data->name,
+            'description' => $data->description,
+            'owner_name' => $data->ownerName,
+        ];
+    }
+
+    public function formCreate(Request $request){
         // dd($request->toArray());?
 
         // $this->validation($request); //use the valitation function
@@ -50,7 +100,7 @@ class BlogController extends Controller
         // dd($name, $description, $image, $ownerName);
 
         if (($name && $description && $image) == null){
-            $this->validation($request);
+            $this->validation($request, 'create');
         }else{
 
             $imageName = uniqid() . $request->file('image')->getClientOriginalName();
@@ -81,13 +131,14 @@ class BlogController extends Controller
     }
 
     //function for validation
-    private function validation ($validation){
+    private function validation ($validation, $action){
         $rules = [
-            'name' => 'required',
+            'name' => 'required|unique:blogs,name, '.$validation->id,
             'description' => 'required|',
-            'image' => 'required|mimes:jpeg,jpg,png,gif'
-
         ];
+
+        $rules ['image'] = $action == 'create' ? 'required|mimes:jpeg,jpg,png,gif' : '' ;
+
         $message = [
             'name.required'=>'必須の名前',
             'description'=>'説明が必要です',
