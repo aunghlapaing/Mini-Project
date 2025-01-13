@@ -14,4 +14,5 @@ Route::group (['prefix'=>'blog'], function(){
     Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('delete');
     Route::get('/update/{id}', [BlogController::class, 'update'])->name('update');
     Route::post('/formUpdate/{id}', [BlogController::class, 'formUpdate'])->name('formUpdate');
+    Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('detail');
 });

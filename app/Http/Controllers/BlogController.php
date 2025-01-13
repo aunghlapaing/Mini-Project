@@ -136,6 +136,12 @@ class BlogController extends Controller
         }
     }
 
+    public function detail($id){
+        $detail = Blog::where('id', $id)->first();
+        // dd($detail);
+        return view('main/detail', compact('detail'));
+    }
+
     //function for validation
     private function validation ($validation, $action){
         $rules = [

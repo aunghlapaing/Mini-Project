@@ -52,18 +52,21 @@
                     </div>
                 </form>
 
-
-                @if(count($blogs) != 0)
+              
                     @foreach ($blogs as $item)
-
                         <div class="card mb-2">
                             <div class="card-body d-flex">
                                 <div class="col-2">
                                     <img src="{{ asset('image/' . $item->image) }}" class="w-100" alt="">
                                 </div>
-                                <div class="col-8">
+                                <div class="col-7">
                                     <div class="ms-2 text-blod">{{ $item->name }}</div>
                                     <div class="ms-2 text-muted">{{ $item->description }}</div>
+                                </div>
+                                <div class="col-1">
+                                    <a href="{{ url('/blog/detail/' . $item->id) }}">
+                                        <button class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i></button>
+                                    </a>
                                 </div>
                                 <div class="col-1">
                                     <a href="{{ url('blog/update/'. $item->id) }}">
@@ -77,9 +80,7 @@
                             </div>
                         </div>
                     @endforeach
-                @else
-                    <h3 class="text-center my-3 text-muted">No record found!</h3>
-                @endif
+                
 
                 <span>{{ $blogs->links() }}</span>
             </div>
