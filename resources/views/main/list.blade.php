@@ -1,6 +1,6 @@
 @extends('Layouts/master')
 
-@section('title', 'Laravel | Mini Project')
+@section('title', 'Laravel | List')
 
 @section('content')
     <div class="container">
@@ -52,7 +52,7 @@
                     </div>
                 </form>
 
-              
+                @if(count($blogs) != 0)
                     @foreach ($blogs as $item)
                         <div class="card mb-2">
                             <div class="card-body d-flex">
@@ -80,7 +80,9 @@
                             </div>
                         </div>
                     @endforeach
-                
+                @else
+                    <h3 class="text-center my-3 text-muted">No record found!</h3>
+                @endif
 
                 <span>{{ $blogs->links() }}</span>
             </div>

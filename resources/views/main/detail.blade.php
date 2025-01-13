@@ -8,7 +8,7 @@
             <div class="col-7 offset-3">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ url('blog/detail/') . $detail->id }}" method='POST' enctype="multipart/form-data">
+                        <form action="{{ url('blog/detail/') . $detail->id }}">
                             <div class="row">
                                 <div class="col-3">
                                     <div class="alert alert-primary" role="alert">

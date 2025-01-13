@@ -1,6 +1,6 @@
 @extends('Layouts/master')
 
-@section('title', 'Laravel | Mini Project')
+@section('title', 'Laravel | Update')
 
 @section('content')
     {{-- this is update page {{ $blog->name}} --}}
