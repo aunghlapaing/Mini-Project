@@ -1,18 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group (['prefix'=>'blog'], function(){
-    Route::get ('/master', [BlogController::class, 'master'])->name('master');
-    Route::get('/list',[BlogController::class, 'list'])->name('list');
-    Route::post('/formCreate', [BlogController::class, 'formCreate'])->name('formCreate');
-    Route::get('/delete/{id}', [BlogController::class, 'delete'])->name('delete');
-    Route::get('/update/{id}', [BlogController::class, 'update'])->name('update');
-    Route::post('/formUpdate/{id}', [BlogController::class, 'formUpdate'])->name('formUpdate');
-    Route::get('/detail/{id}', [BlogController::class, 'detail'])->name('detail');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__.'/auth.php';
